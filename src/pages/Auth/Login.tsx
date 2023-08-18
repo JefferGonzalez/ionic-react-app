@@ -1,6 +1,6 @@
-import { useState } from 'react'
 import {
   IonButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -9,20 +9,30 @@ import {
   IonContent,
   IonHeader,
   IonInput,
+  IonMenuButton,
   IonPage,
   IonTitle,
-  IonToolbar
-} from '@ionic/react'
-import './main.css'
+  IonToolbar,
+} from "@ionic/react";
+import { useState } from "react";
+import "./main.css";
 
 export default function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [username, setUsername] = useState<string | number | null>()
+  const [password, setPassword] = useState<string | number | null>();
 
+  const handleLogin = () => {
+    if (username && password) {
+      alert(`Username: ${username} Password: ${password}`);
+    }
+  };
   return (
-    <IonPage>
+    <IonPage id="main-content">
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot="start">
+            <IonMenuButton />
+          </IonButtons>
           <IonTitle>Ionic with React App</IonTitle>
         </IonToolbar>
       </IonHeader>
@@ -31,7 +41,7 @@ export default function Login() {
           <IonCardHeader>
             <IonCardTitle
               style={{
-                textAlign: 'center'
+                textAlign: "center",
               }}
             >
               Welcome
@@ -39,41 +49,43 @@ export default function Login() {
           </IonCardHeader>
           <IonCardContent>
             <IonInput
-              name='username'
-              placeholder='Username'
-              type='text'
+              label="Username"
+              name="username"
+              placeholder="Enter your username"
+              type="text"
               value={username}
               onIonChange={(e) => setUsername(e.detail.value!)}
+              clearInput={true}
             />
             <IonInput
-              name='password'
-              placeholder='Password'
-              type='password'
+              label="Password"
+              name="password"
+              placeholder="Enter your username"
+              type="password"
               value={password}
               onIonChange={(e) => setPassword(e.detail.value!)}
+              clearInput={true}
             />
             <IonButton
-              expand='block'
+              expand="block"
               style={{
-                margin: '1rem'
+                margin: "1rem",
               }}
-              onClick={() =>
-                alert(`Username: ${username} Password: ${password}`)
-              }
+              onClick={handleLogin}
             >
               Login
             </IonButton>
 
             <IonCardSubtitle
               style={{
-                textAlign: 'center'
+                textAlign: "center",
               }}
             >
-              <a href='/'>Forgot Password?</a>
+              <a href="/">Forgot Password?</a>
             </IonCardSubtitle>
           </IonCardContent>
         </IonCard>
       </IonContent>
     </IonPage>
-  )
+  );
 }
