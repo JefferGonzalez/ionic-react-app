@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import {
+  IonAlert,
   IonButton,
   IonCard,
   IonCardContent,
@@ -14,10 +15,37 @@ import {
   IonToolbar
 } from '@ionic/react'
 import './main.css'
+import { Link } from 'react-router-dom'
+
+interface Alert {
+  isOpen: boolean
+  title: string
+  message: string
+}
 
 export default function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
+  const [alert, setAlert] = useState<Alert>({
+    isOpen: false,
+    title: '',
+    message: ''
+  })
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const data = new FormData(e.currentTarget)
+    const username = data.get('username')
+    const password = data.get('password')
+
+    if (username === '' || password === '') {
+      setAlert({
+        isOpen: true,
+        title: 'Error',
+        message: 'Username or password is empty'
+      })
+
+      return
+    }
+  }
 
   return (
     <IonPage>
@@ -27,6 +55,19 @@ export default function Login() {
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
+        <IonAlert
+          isOpen={alert.isOpen || false}
+          header={alert.title}
+          message={alert.message}
+          buttons={['OK']}
+          onDidDismiss={() =>
+            setAlert({
+              isOpen: false,
+              title: '',
+              message: ''
+            })
+          }
+        ></IonAlert>
         <IonCard>
           <IonCardHeader>
             <IonCardTitle
@@ -38,38 +79,30 @@ export default function Login() {
             </IonCardTitle>
           </IonCardHeader>
           <IonCardContent>
-            <IonInput
-              name='username'
-              placeholder='Username'
-              type='text'
-              value={username}
-              onIonChange={(e) => setUsername(e.detail.value!)}
-            />
-            <IonInput
-              name='password'
-              placeholder='Password'
-              type='password'
-              value={password}
-              onIonChange={(e) => setPassword(e.detail.value!)}
-            />
-            <IonButton
-              expand='block'
-              style={{
-                margin: '1rem'
-              }}
-              onClick={() =>
-                alert(`Username: ${username} Password: ${password}`)
-              }
-            >
-              Login
-            </IonButton>
+            <form onSubmit={handleSubmit}>
+              <IonInput name='username' placeholder='Username' type='text' />
+              <IonInput
+                name='password'
+                placeholder='Password'
+                type='password'
+              />
+              <IonButton
+                type='submit'
+                expand='block'
+                style={{
+                  margin: '1rem'
+                }}
+              >
+                Login
+              </IonButton>
+            </form>
 
             <IonCardSubtitle
               style={{
                 textAlign: 'center'
               }}
             >
-              <a href='/'>Forgot Password?</a>
+              <Link to='/auth/forgot-password'>Forgot Password?</Link>
             </IonCardSubtitle>
           </IonCardContent>
         </IonCard>

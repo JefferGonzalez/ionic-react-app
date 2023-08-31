@@ -1,4 +1,4 @@
-import { Redirect, Route } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import {
   IonApp,
   IonIcon,
@@ -10,7 +10,7 @@ import {
   setupIonicReact
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
-import { ellipse, square, triangle } from 'ionicons/icons'
+import { home, archive, cart } from 'ionicons/icons'
 
 import Routes from './routes'
 
@@ -41,23 +41,26 @@ const App: React.FC = () => (
       <IonTabs>
         <IonRouterOutlet>
           {Routes.map((route) => (
-            <Route key={route.id} path={route.path} exact={route.exact}>
-              {route.component}
-            </Route>
+            <Route
+              key={route.id}
+              path={route.path}
+              exact={route.exact}
+              render={() => route.component}
+            />
           ))}
         </IonRouterOutlet>
         <IonTabBar slot='bottom'>
-          <IonTabButton tab='login' href='/'>
-            <IonIcon aria-hidden='true' icon={triangle} />
+          <IonTabButton tab='login' href='/login'>
+            <IonIcon icon={home} />
             <IonLabel>Home</IonLabel>
           </IonTabButton>
           <IonTabButton tab='products' href='/products'>
-            <IonIcon aria-hidden='true' icon={ellipse} />
+            <IonIcon icon={cart} />
             <IonLabel>Products</IonLabel>
           </IonTabButton>
-          <IonTabButton tab='invoices' href='/invoices'>
-            <IonIcon aria-hidden='true' icon={square} />
-            <IonLabel>Invoices</IonLabel>
+          <IonTabButton tab='sales' href='/sales'>
+            <IonIcon icon={archive} />
+            <IonLabel>Sales</IonLabel>
           </IonTabButton>
         </IonTabBar>
       </IonTabs>

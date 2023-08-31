@@ -1,8 +1,9 @@
 import Login from './pages/Auth/Login'
-import Invoices from './pages/Invoices'
+import Sales from './pages/Sales'
 import Products from './pages/Products'
+import ShowProduct from './pages/Products/show'
 
-type Route = {
+interface Route {
   id: string
   path: string
   component: JSX.Element
@@ -12,20 +13,25 @@ type Route = {
 const Routes: Route[] = [
   {
     id: 'login',
-    path: '/',
+    path: '/login',
     component: <Login />,
     exact: true
   },
   {
     id: 'products',
     path: '/products',
-    component: <Products />,
+    component: <Products />
+  },
+  {
+    id: 'product',
+    path: '/product/:id',
+    component: <ShowProduct />,
     exact: true
   },
   {
-    id: 'invoices',
-    path: '/invoices',
-    component: <Invoices />,
+    id: 'sales',
+    path: '/sales',
+    component: <Sales />,
     exact: true
   }
 ]

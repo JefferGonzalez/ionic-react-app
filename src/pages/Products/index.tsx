@@ -1,29 +1,46 @@
+import { useEffect, useState } from 'react'
 import {
+  IonButton,
   IonContent,
   IonHeader,
   IonPage,
+  IonSearchbar,
   IonTitle,
   IonToolbar
 } from '@ionic/react'
-import ExploreContainer from '../../components/ExploreContainer'
-import './main.css'
+import { Product, getProducts } from '../../services/Products'
 import ProductsList from '../../components/ProductsList'
+import './main.css'
+import ProductsToolbar from '../../components/ProductsToolbar'
+import AddProduct from './add'
 
 const Products: React.FC = () => {
+  const [products, setProducts] = useState<Product[]>([])
+  const [isOpen, setIsOpen] = useState(false)
+
+  useEffect(() => {
+    getProducts()
+      .then((products) => setProducts(products))
+      .catch((error) => console.error(error))
+  }, [])
+
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonTitle>Products</IonTitle>
+          <IonTitle
+            style={{
+              textAlign: 'center'
+            }}
+          >
+            List Products
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent fullscreen>
-        <IonHeader collapse='condense'>
-          <IonToolbar>
-            <IonTitle size='large'>Tab 2</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ProductsList />
+        <ProductsToolbar setIsOpen={setIsOpen} />
+        <ProductsList products={products} />
+        <AddProduct isOpen={isOpen} setIsOpen={setIsOpen} />
       </IonContent>
     </IonPage>
   )
