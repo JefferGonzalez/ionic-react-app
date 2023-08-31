@@ -2,6 +2,7 @@ import { useState } from 'react'
 import {
   IonAlert,
   IonButton,
+  IonButtons,
   IonCard,
   IonCardContent,
   IonCardHeader,
@@ -10,6 +11,7 @@ import {
   IonContent,
   IonHeader,
   IonInput,
+  IonMenuButton,
   IonPage,
   IonTitle,
   IonToolbar
@@ -48,9 +50,12 @@ export default function Login() {
   }
 
   return (
-    <IonPage>
+    <IonPage id='main-content'>
       <IonHeader>
         <IonToolbar>
+          <IonButtons slot='start'>
+            <IonMenuButton />
+          </IonButtons>
           <IonTitle>Ionic with React App</IonTitle>
         </IonToolbar>
       </IonHeader>
