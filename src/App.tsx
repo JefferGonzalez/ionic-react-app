@@ -10,7 +10,7 @@ import {
 } from '@ionic/react'
 import { IonReactRouter } from '@ionic/react-router'
 import { archive, cart, home } from 'ionicons/icons'
-import { Route } from 'react-router-dom'
+import { Redirect, Route } from 'react-router-dom'
 
 import Routes from './routes'
 
@@ -32,40 +32,43 @@ import '@ionic/react/css/text-transformation.css'
 
 /* Theme variables */
 import './theme/variables.css'
+import NotFoundPage from './pages/NotFoundPage'
 
 setupIonicReact()
 
-const App: React.FC = () => (
-  <IonApp>
-    <IonReactRouter>
-      <IonTabs>
-        <IonRouterOutlet>
-          {Routes.map((route) => (
-            <Route
-              key={route.id}
-              path={route.path}
-              exact={route.exact}
-              render={() => route.component}
-            />
-          ))}
-        </IonRouterOutlet>
-        <IonTabBar slot='bottom'>
-          <IonTabButton tab='login' href='/login'>
-            <IonIcon icon={home} />
-            <IonLabel>Home</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab='products' href='/products'>
-            <IonIcon icon={cart} />
-            <IonLabel>Products</IonLabel>
-          </IonTabButton>
-          <IonTabButton tab='sales' href='/sales'>
-            <IonIcon icon={archive} />
-            <IonLabel>Sales</IonLabel>
-          </IonTabButton>
-        </IonTabBar>
-      </IonTabs>
-    </IonReactRouter>
-  </IonApp>
-)
-
-export default App
+export default function App() {
+  return (
+    <IonApp>
+      <IonReactRouter>
+        <IonTabs>
+          <IonRouterOutlet>
+            <Route exact path='/' render={() => <Redirect to='/login' />} />
+            {Routes.map((route) => (
+              <Route
+                key={route.id}
+                path={route.path}
+                exact={route.exact}
+                render={() => route.component}
+              />
+            ))}
+            <Route render={() => <NotFoundPage />} />
+          </IonRouterOutlet>
+          <IonTabBar slot='bottom'>
+            <IonTabButton tab='login' href='/login'>
+              <IonIcon icon={home} />
+              <IonLabel>Home</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab='products' href='/products'>
+              <IonIcon icon={cart} />
+              <IonLabel>Products</IonLabel>
+            </IonTabButton>
+            <IonTabButton tab='sales' href='/sales'>
+              <IonIcon icon={archive} />
+              <IonLabel>Sales</IonLabel>
+            </IonTabButton>
+          </IonTabBar>
+        </IonTabs>
+      </IonReactRouter>
+    </IonApp>
+  )
+}

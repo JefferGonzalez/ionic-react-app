@@ -9,6 +9,7 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react'
+import Layout from '../Layout'
 
 const ShowProduct: React.FC = () => {
   const { id } = useParams<{ id: string }>()
@@ -22,26 +23,19 @@ const ShowProduct: React.FC = () => {
   }, [])
 
   return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Show Product</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        {message && <p>{message}</p>}
-        {product && (
-          <div
-            style={{
-              width: '80%',
-              margin: 'auto'
-            }}
-          >
-            <ProductCard product={product} showLink={false} />
-          </div>
-        )}
-      </IonContent>
-    </IonPage>
+    <Layout id='product-show-page' title='Show Product'>
+      {message && <p>{message}</p>}
+      {product && (
+        <div
+          style={{
+            width: '80%',
+            margin: 'auto'
+          }}
+        >
+          <ProductCard product={product} showLink={false} />
+        </div>
+      )}
+    </Layout>
   )
 }
 

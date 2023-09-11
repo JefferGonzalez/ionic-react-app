@@ -1,13 +1,7 @@
-import { useState } from 'react'
 import {
-  IonAlert,
   IonButton,
   IonButtons,
-  IonCard,
-  IonCardContent,
-  IonCardHeader,
   IonCardSubtitle,
-  IonCardTitle,
   IonContent,
   IonHeader,
   IonInput,
@@ -16,8 +10,11 @@ import {
   IonTitle,
   IonToolbar
 } from '@ionic/react'
-import './main.css'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import Card from '../../components/Card'
+import './main.css'
+import Layout from '../Layout'
 
 interface Alert {
   isOpen: boolean
@@ -50,68 +47,46 @@ export default function Login() {
   }
 
   return (
-    <IonPage id='main-content'>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot='start'>
-            <IonMenuButton />
-          </IonButtons>
-          <IonTitle>Ionic with React App</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonAlert
-          isOpen={alert.isOpen || false}
-          header={alert.title}
-          message={alert.message}
-          buttons={['OK']}
-          onDidDismiss={() =>
-            setAlert({
-              isOpen: false,
-              title: '',
-              message: ''
-            })
-          }
-        ></IonAlert>
-        <IonCard>
-          <IonCardHeader>
-            <IonCardTitle
-              style={{
-                textAlign: 'center'
-              }}
-            >
-              Welcome
-            </IonCardTitle>
-          </IonCardHeader>
-          <IonCardContent>
-            <form onSubmit={handleSubmit}>
-              <IonInput name='username' placeholder='Username' type='text' />
-              <IonInput
-                name='password'
-                placeholder='Password'
-                type='password'
-              />
-              <IonButton
-                type='submit'
-                expand='block'
-                style={{
-                  margin: '1rem'
-                }}
-              >
-                Login
-              </IonButton>
-            </form>
+    <Layout id='main-content' title='Ionic with React App'>
+      <Card title='Welcome (Work in progress)'>
+        <form onSubmit={handleSubmit}>
+          <IonInput
+            id='username'
+            name='username'
+            label='Username'
+            placeholder='Enter your username'
+            type='text'
+            clearInput={true}
+            required
+          />
+          <IonInput
+            id='password'
+            name='password'
+            label='Password'
+            placeholder='Enter your password'
+            type='password'
+            clearInput={true}
+            required
+          />
+          <IonButton
+            type='submit'
+            expand='block'
+            style={{
+              margin: '1rem'
+            }}
+          >
+            Login
+          </IonButton>
+        </form>
 
-            <IonCardSubtitle
-              style={{
-                textAlign: 'center'
-              }}
-            >
-              <Link to='/auth/forgot-password'>Forgot Password?</Link>
-            </IonCardSubtitle>
-          </IonCardContent>
-        </IonCard>
-      </IonContent>
-    </IonPage>
+        <IonCardSubtitle
+          style={{
+            textAlign: 'center'
+          }}
+        >
+          <Link to='/auth/forgot-password'>Forgot Password?</Link>
+        </IonCardSubtitle>
+      </Card>
+    </Layout>
   )
 }

@@ -3,10 +3,12 @@ import {
   IonButtons,
   IonContent,
   IonHeader,
+  IonInput,
   IonModal,
   IonTitle,
   IonToolbar
 } from '@ionic/react'
+import Card from '../../components/Card'
 
 interface AddProductProps {
   isOpen: boolean
@@ -14,8 +16,12 @@ interface AddProductProps {
 }
 
 export default function AddProduct({ isOpen, setIsOpen }: AddProductProps) {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+  }
+
   return (
-    <IonModal isOpen={isOpen}>
+    <IonModal isOpen={isOpen} onDidDismiss={() => setIsOpen(false)}>
       <IonHeader>
         <IonToolbar>
           <IonButtons slot='start'>
@@ -26,7 +32,7 @@ export default function AddProduct({ isOpen, setIsOpen }: AddProductProps) {
               textAlign: 'center'
             }}
           >
-            Welcome
+            Add Product (Work in progress)
           </IonTitle>
           <IonButtons slot='end'>
             <IonButton strong={true} onClick={() => setIsOpen(false)}>
@@ -36,9 +42,47 @@ export default function AddProduct({ isOpen, setIsOpen }: AddProductProps) {
         </IonToolbar>
       </IonHeader>
       <IonContent className='ion-padding'>
-        <h1>
-          Welcome to <strong>My App</strong>
-        </h1>
+        <Card>
+          <form onSubmit={handleSubmit}>
+            <IonInput
+              id='name'
+              name='name'
+              label='Name'
+              placeholder='Enter name of product'
+              type='text'
+              errorText='Invalid text'
+              clearInput={true}
+              required
+            />
+            <IonInput
+              id='price'
+              name='price'
+              label='Price'
+              placeholder='Enter price of product'
+              type='number'
+              clearInput={true}
+              required
+            />
+            <IonInput
+              id='photo'
+              name='photo'
+              label='Photo'
+              placeholder='Enter photo of product'
+              type='url'
+              clearInput={true}
+              required
+            />
+            <IonButton
+              type='submit'
+              expand='block'
+              style={{
+                margin: '1rem'
+              }}
+            >
+              Add
+            </IonButton>
+          </form>
+        </Card>
       </IonContent>
     </IonModal>
   )
